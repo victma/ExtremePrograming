@@ -25,6 +25,15 @@ public class PlayerTest extends TestCase {
         initialMoney = player.getMoney();
         assertEquals("mise non faite", -1, player.reach(initialMoney + 2));
         assertEquals("monnaie restante", initialMoney, player.getMoney());
+
+    }
+    
+    @Test
+    public void testMoney(){
+        Player player = new Player("Bob");
+        
+        player.setMoney(0);
+        assertTrue(player.isBroke());
     }
     
     @Test

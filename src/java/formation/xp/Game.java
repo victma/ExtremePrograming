@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package formation.xp;
-
+package formation.xp; 
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author malet
@@ -19,6 +20,7 @@ public class Game {
     public Game(String[] playerNames) {
         players = new Player[playerNames.length];
         
+        
         for (int i=0; i < playerNames.length; i++) {
             players[i] = new Player(playerNames[i]);
         }
@@ -27,7 +29,14 @@ public class Game {
         totalBet = 0;
         currentBet = 0;
     }
-    
+    public void newRound()
+    {
+        CardDistributor dist = new CardDistributor();
+        for(int i=0; i<players.length; i++)
+        {
+            players[i].setCards(dist.getNRandomCards(2));
+        }
+    }
     public int getNbPlayers() {
         return players.length;
     }
@@ -74,6 +83,14 @@ public class Game {
             currentBet = Math.max(player.getCurrentBet(), currentBet);
         }
         
+    public List excludePlayer(){
+        List<Integer> list = new ArrayList<Integer>();
+        for(int i=0; i<this.getNbPlayers(); i++){
+            if(players[i].isBroke())
+                list.add(i);
+        }
+        
+        return list;
     }
     
 }

@@ -1,6 +1,7 @@
 package formation.xp;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class GameTest extends TestCase {
@@ -32,6 +33,16 @@ public class GameTest extends TestCase {
     }
     
     @Test
+    public void testExcludePlayer(){
+        Game testGame = new Game(new String[]{"Bob", "Cecile"});
+        
+        assertTrue(testGame.excludePlayer().isEmpty());
+        
+        testGame.getPlayer(0).setMoney(0);
+        assertEquals(testGame.excludePlayer().size(), 1);
+        assertEquals(testGame.excludePlayer().get(0), 0);
+    }
+    @Test
     public void testCall() {
         Game testGame = new Game(new String[]{"Bob", "Cecile"});
         testGame.raise(testGame.getPlayer(0), 1);
@@ -52,5 +63,4 @@ public class GameTest extends TestCase {
         assertEquals("mise minimale", amountAllIn, testGame.getCurrentBet());
     
     }
-    
 }

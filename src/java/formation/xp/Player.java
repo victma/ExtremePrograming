@@ -82,6 +82,10 @@ public class Player {
     
     public int getCurrentBet() {
         return currentBet;
+
+    public void setMoney(int m)
+    {
+        money = m;
     }
 
     public int reach(int amount) {
@@ -99,5 +103,12 @@ public class Player {
     
     public int allIn() {
         return reach(money + currentBet);
+
+    public void check()
+    {}
+    
+    public boolean isBroke()
+    {
+        return (money == 0);
     }
 }
