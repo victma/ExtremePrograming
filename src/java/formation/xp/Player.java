@@ -80,6 +80,9 @@ public class Player {
         return money;
     }
     
+    public int getCurrentBet() {
+        return currentBet;
+
     public void setMoney(int m)
     {
         money = m;
@@ -98,6 +101,9 @@ public class Player {
         return diff;
     }
     
+    public int allIn() {
+        return reach(money + currentBet);
+
     public void check()
     {}
     
