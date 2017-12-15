@@ -19,7 +19,6 @@ public class Game {
     private int currentBet;
     private int currentPlayerIdx;
     private int dealerIdx;        
-
     
     public Game(String[] playerNames) {
         players = new ArrayList<Player>(playerNames.length);
@@ -49,9 +48,11 @@ public class Game {
         raise(players.get(currentPlayerIdx), Game.smallBlind);
         
         CardDistributor dist = new CardDistributor();
+
+        int[] tirage = dist.getNRandomCards(2*players.length);
         for(int i=0; i < players.size(); i++)
         {
-            players.get(i).setCards(dist.getNRandomCards(2));
+            players.get(i).setCards(tirage[2*i], tirage[2*i+1]);
         }
     }
     public int getNbPlayers() {

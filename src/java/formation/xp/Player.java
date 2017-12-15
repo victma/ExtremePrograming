@@ -26,11 +26,9 @@ public class Player {
         return name;
     }
 
-    public void setCards(int[] c) {
-        if (c.length != 2) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
-        cards = c;
+    public void setCards(int c1, int c2) {
+        cards[0] = c1;
+        cards[1] = c2;
     }
 
     public int[] getCards() {
