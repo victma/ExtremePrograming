@@ -77,6 +77,11 @@ public class Player {
     public int getMoney() {
         return money;
     }
+    
+    public void setMoney(int m)
+    {
+        money = m;
+    }
 
     public boolean bet(int amount) {
         if (amount > money) {
@@ -85,5 +90,13 @@ public class Player {
 
         money -= amount;
         return true;
+    }
+    
+    public void check()
+    {}
+    
+    public boolean isBroke()
+    {
+        return (money == 0);
     }
 }
