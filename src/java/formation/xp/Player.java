@@ -82,9 +82,9 @@ public class Player {
     
     public int getCurrentBet() {
         return currentBet;
+    }
 
-    public void setMoney(int m)
-    {
+    public void setMoney(int m) {
         money = m;
     }
 
@@ -103,6 +103,7 @@ public class Player {
     
     public int allIn() {
         return reach(money + currentBet);
+    }
 
     public void check()
     {}
