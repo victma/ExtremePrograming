@@ -15,7 +15,6 @@ public class Game {
     private int round;
     private int totalBet;
     private int currentBet;
-        
     
     public Game(String[] playerNames) {
         players = new Player[playerNames.length];
@@ -32,9 +31,10 @@ public class Game {
     public void newRound()
     {
         CardDistributor dist = new CardDistributor();
+        int[] tirage = dist.getNRandomCards(2*players.length);
         for(int i=0; i<players.length; i++)
         {
-            players[i].setCards(dist.getNRandomCards(2));
+            players[i].setCards(tirage[2*i], tirage[2*i+1]);
         }
     }
     public int getNbPlayers() {
