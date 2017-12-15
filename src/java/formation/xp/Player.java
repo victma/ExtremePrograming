@@ -79,6 +79,10 @@ public class Player {
     public int getMoney() {
         return money;
     }
+    
+    public int getCurrentBet() {
+        return currentBet;
+    }
 
     public int reach(int amount) {
         int diff = amount - currentBet;
