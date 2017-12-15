@@ -33,15 +33,14 @@ public class GameTest extends TestCase {
     }
     
     @Test
-    public void testExcludePlayer(){
+    public void testNewRound(){
         Game testGame = new Game(new String[]{"Bob", "Cecile"});
-        
-        assertTrue(testGame.excludePlayer().isEmpty());
-        
-        testGame.getPlayer(0).setMoney(0);
-        assertEquals(testGame.excludePlayer().size(), 1);
-        assertEquals(testGame.excludePlayer().get(0), 0);
+                
+        testGame.getPlayer(0).allIn();
+        testGame.newRound();
+        assertEquals("éliminer les joueurs fauchés", 1, testGame.getNbPlayers());
     }
+    
     @Test
     public void testCall() {
         Game testGame = new Game(new String[]{"Bob", "Cecile"});
@@ -61,6 +60,16 @@ public class GameTest extends TestCase {
                 
         assertEquals("montant pot", amountAllIn, testGame.getTotalBet());
         assertEquals("mise minimale", amountAllIn, testGame.getCurrentBet());
+    }
     
+    @Test
+    public void testTurns() {
+        Game testGame = new Game(new String[]{"Bob", "Cecile"});
+        
+        assertEquals("premier tour", "Bob", testGame.getCurrentPlayer().getName());
+        testGame.next();
+        assertEquals("premier tour", "Cecile", testGame.getCurrentPlayer().getName());
+        testGame.next();
+        assertEquals("premier tour", "Bob", testGame.getCurrentPlayer().getName());
     }
 }

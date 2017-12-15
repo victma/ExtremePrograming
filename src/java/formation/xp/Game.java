@@ -11,34 +11,43 @@ import java.util.ArrayList;
  */
 public class Game {
     
-    private Player[] players;
+    private ArrayList<Player> players;
     private int round;
     private int totalBet;
     private int currentBet;
+    private int currentPlayerIdx;
         
     
     public Game(String[] playerNames) {
-        players = new Player[playerNames.length];
+        players = new ArrayList<Player>(playerNames.length);
         
         
         for (int i=0; i < playerNames.length; i++) {
-            players[i] = new Player(playerNames[i]);
+            players.add(new Player(playerNames[i]));
         }
         
         round = 1;
         totalBet = 0;
         currentBet = 0;
+        currentPlayerIdx = 0;
     }
+    
     public void newRound()
     {
+        for (int i=0; i < players.size(); i++) {
+            if(players.get(i).isBroke()) {
+                players.remove(i);
+            }
+        }
+        
         CardDistributor dist = new CardDistributor();
-        for(int i=0; i<players.length; i++)
+        for(int i=0; i < players.size(); i++)
         {
-            players[i].setCards(dist.getNRandomCards(2));
+            players.get(i).setCards(dist.getNRandomCards(2));
         }
     }
     public int getNbPlayers() {
-        return players.length;
+        return players.size();
     }
     
     public int getRound() {
@@ -46,8 +55,8 @@ public class Game {
     }
     
     public Player getPlayer(int positionPlayer) {
-        if (positionPlayer >= 0 && positionPlayer < players.length) {
-            return players[positionPlayer];
+        if (positionPlayer >= 0 && positionPlayer < players.size()) {
+            return players.get(positionPlayer);
         }
         return null;
     }
@@ -58,6 +67,10 @@ public class Game {
     
     public int getCurrentBet() {
         return currentBet;
+    }
+    
+    public Player getCurrentPlayer() {
+        return players.get(currentPlayerIdx);
     }
     
     public void raise(Player player, int amount) {
@@ -82,15 +95,12 @@ public class Game {
             currentBet = Math.max(player.getCurrentBet(), currentBet);
         }
     }
-        
-    public List excludePlayer(){
-        List<Integer> list = new ArrayList<Integer>();
-        for(int i=0; i<this.getNbPlayers(); i++){
-            if(players[i].isBroke())
-                list.add(i);
+    
+    public void next() {
+        currentPlayerIdx = (currentPlayerIdx + 1) % players.size();
+        if (getCurrentPlayer().isBroke()) {
+            next();
         }
-        
-        return list;
     }
     
 }
