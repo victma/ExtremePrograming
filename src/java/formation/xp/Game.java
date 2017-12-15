@@ -13,6 +13,7 @@ public class Game {
     private Player[] players;
     private int round;
     private int totalBet;
+    private int currentBet;
         
     
     public Game(String[] playerNames) {
@@ -24,6 +25,7 @@ public class Game {
         
         round = 1;
         totalBet = 0;
+        currentBet = 0;
     }
     
     public int getNbPlayers() {
@@ -45,9 +47,22 @@ public class Game {
         return totalBet;
     }
     
-    public void bet(Player player, int amount) {
-        if (player.bet(amount)) {
-            totalBet += amount;
+    public int getCurrentBet() {
+        return currentBet;
+    }
+    
+    public void raise(Player player, int amount) {
+        int added = player.reach(currentBet + amount);
+        if (added >=0) {
+            totalBet += added;
+            currentBet += amount;
+        }
+    }
+    
+    public void call(Player player) {
+        int added = player.reach(currentBet); 
+        if (added >= 0) {
+            totalBet += added;
         }
     }
     

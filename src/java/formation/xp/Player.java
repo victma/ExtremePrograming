@@ -11,10 +11,12 @@ package formation.xp;
 public class Player {
     private String name;
     private int money;
+    private int currentBet;
     
     public Player(String playerName) {
         name = playerName;
         money = 20000;
+        currentBet = 0;
     }
     
     public String getName() {
@@ -25,12 +27,16 @@ public class Player {
         return money;
     }
     
-    public boolean bet(int amount) {
-        if (amount > money) {
-            return false;
+    public int reach(int amount) {
+        int diff = amount - currentBet;
+        
+        if (diff > money) {
+            return -1;
         }
         
-        money -= amount;
-        return true;
+        money -= diff;
+        currentBet = amount;
+        
+        return diff;
     }
 }

@@ -13,17 +13,18 @@ import org.junit.Test;
  */
 public class PlayerTest extends TestCase {
     @Test
-    public void testBet() {
+    public void testReach() {
         Player player = new Player("Bob");
         
         //mise possible
         int initialMoney = player.getMoney();
-        assertTrue("mise faite", player.bet(1));
+        assertEquals("mise faite", 1, player.reach(1));
         assertEquals("monnaie restante", initialMoney - 1, player.getMoney());
         
         //mise impossible
         initialMoney = player.getMoney();
-        assertFalse("mise non faite", player.bet(initialMoney + 1));
+        assertEquals("mise non faite", -1, player.reach(initialMoney + 2));
         assertEquals("monnaie restante", initialMoney, player.getMoney());
     }
+   
 }
