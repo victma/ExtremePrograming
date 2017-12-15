@@ -72,4 +72,13 @@ public class GameTest extends TestCase {
         testGame.next();
         assertEquals("premier tour", "Bob", testGame.getCurrentPlayer().getName());
     }
+    
+    @Test
+    public void testDealer() {
+        Game testGame = new Game(new String[]{"Bob", "Cecile"});
+        int initialMoney = testGame.getPlayer(1).getMoney();
+        testGame.newRound();
+        
+        assertEquals("payer la petite blind", initialMoney - Game.smallBlind, testGame.getPlayer(1).getMoney());
+    }
 }

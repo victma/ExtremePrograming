@@ -11,16 +11,18 @@ import java.util.ArrayList;
  */
 public class Game {
     
+    static public int smallBlind = 5;
+    
     private ArrayList<Player> players;
     private int round;
     private int totalBet;
     private int currentBet;
     private int currentPlayerIdx;
-        
+    private int dealerIdx;        
+
     
     public Game(String[] playerNames) {
         players = new ArrayList<Player>(playerNames.length);
-        
         
         for (int i=0; i < playerNames.length; i++) {
             players.add(new Player(playerNames[i]));
@@ -30,15 +32,21 @@ public class Game {
         totalBet = 0;
         currentBet = 0;
         currentPlayerIdx = 0;
+        dealerIdx = 0;
     }
     
     public void newRound()
     {
-        for (int i=0; i < players.size(); i++) {
+        for (int i=players.size() - 1; i >= 0; i--) {
             if(players.get(i).isBroke()) {
                 players.remove(i);
             }
         }
+        
+        currentPlayerIdx = dealerIdx;
+        next();
+        
+        raise(players.get(currentPlayerIdx), Game.smallBlind);
         
         CardDistributor dist = new CardDistributor();
         for(int i=0; i < players.size(); i++)
@@ -101,6 +109,5 @@ public class Game {
         if (getCurrentPlayer().isBroke()) {
             next();
         }
-    }
-    
+    } 
 }
