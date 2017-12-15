@@ -41,4 +41,16 @@ public class GameTest extends TestCase {
         assertEquals("mise minimale", 1, testGame.getCurrentBet());
     }
     
+    @Test
+    public void testAllIn() {
+        Game testGame = new Game(new String[]{"Bob", "Cecile"});
+        int amountAllIn = testGame.getPlayer(0).getMoney(); 
+        
+        testGame.allIn(testGame.getPlayer(0));
+                
+        assertEquals("montant pot", amountAllIn, testGame.getTotalBet());
+        assertEquals("mise minimale", amountAllIn, testGame.getCurrentBet());
+    
+    }
+    
 }

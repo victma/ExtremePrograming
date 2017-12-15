@@ -66,4 +66,14 @@ public class Game {
         }
     }
     
+    public void allIn(Player player) {
+        
+        int added = player.allIn(); 
+        if (added >= 0) {
+            totalBet += added;
+            currentBet = Math.max(player.getCurrentBet(), currentBet);
+        }
+        
+    }
+    
 }

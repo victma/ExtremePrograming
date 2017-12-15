@@ -37,8 +37,17 @@ public class PlayerTest extends TestCase {
         
         player.reach(initialMoney);
         assertEquals("mise faite", initialMoney, player.getCurrentBet());
+           
+    }
+    
+    @Test
+    public void testAllIn() {
+        Player player = new Player("Bob");
         
+        int initialMoney = player.getMoney();
         
+        assertEquals("tapis", initialMoney, player.allIn());
+        assertEquals("monnaie restante nulle", 0, player.getMoney());
     }
    
 }

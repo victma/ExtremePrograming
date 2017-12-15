@@ -96,4 +96,8 @@ public class Player {
         
         return diff;
     }
+    
+    public int allIn() {
+        return reach(money + currentBet);
+    }
 }
