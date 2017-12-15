@@ -29,10 +29,10 @@ public class PlayerTest extends TestCase {
     }
     
     @Test
-    public void testMoney(){
+    public void testIsBroke(){
         Player player = new Player("Bob");
         
-        player.setMoney(0);
+        player.allIn();
         assertTrue(player.isBroke());
     }
     

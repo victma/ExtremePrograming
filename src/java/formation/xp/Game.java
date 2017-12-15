@@ -11,34 +11,52 @@ import java.util.ArrayList;
  */
 public class Game {
     
-    private Player[] players;
+    static public int smallBlind = 5;
+    
+    private ArrayList<Player> players;
     private int round;
     private int totalBet;
     private int currentBet;
+    private int currentPlayerIdx;
+    private int dealerIdx;        
     
     public Game(String[] playerNames) {
-        players = new Player[playerNames.length];
-        
+        players = new ArrayList<Player>(playerNames.length);
         
         for (int i=0; i < playerNames.length; i++) {
-            players[i] = new Player(playerNames[i]);
+            players.add(new Player(playerNames[i]));
         }
         
         round = 1;
         totalBet = 0;
         currentBet = 0;
+        currentPlayerIdx = 0;
+        dealerIdx = 0;
     }
+    
     public void newRound()
     {
+        for (int i=players.size() - 1; i >= 0; i--) {
+            if(players.get(i).isBroke()) {
+                players.remove(i);
+            }
+        }
+        
+        currentPlayerIdx = dealerIdx;
+        next();
+        
+        raise(players.get(currentPlayerIdx), Game.smallBlind);
+        
         CardDistributor dist = new CardDistributor();
+
         int[] tirage = dist.getNRandomCards(2*players.length);
-        for(int i=0; i<players.length; i++)
+        for(int i=0; i < players.size(); i++)
         {
-            players[i].setCards(tirage[2*i], tirage[2*i+1]);
+            players.get(i).setCards(tirage[2*i], tirage[2*i+1]);
         }
     }
     public int getNbPlayers() {
-        return players.length;
+        return players.size();
     }
     
     public int getRound() {
@@ -46,8 +64,8 @@ public class Game {
     }
     
     public Player getPlayer(int positionPlayer) {
-        if (positionPlayer >= 0 && positionPlayer < players.length) {
-            return players[positionPlayer];
+        if (positionPlayer >= 0 && positionPlayer < players.size()) {
+            return players.get(positionPlayer);
         }
         return null;
     }
@@ -58,6 +76,10 @@ public class Game {
     
     public int getCurrentBet() {
         return currentBet;
+    }
+    
+    public Player getCurrentPlayer() {
+        return players.get(currentPlayerIdx);
     }
     
     public void raise(Player player, int amount) {
@@ -82,15 +104,11 @@ public class Game {
             currentBet = Math.max(player.getCurrentBet(), currentBet);
         }
     }
-        
-    public List excludePlayer(){
-        List<Integer> list = new ArrayList<Integer>();
-        for(int i=0; i<this.getNbPlayers(); i++){
-            if(players[i].isBroke())
-                list.add(i);
-        }
-        
-        return list;
-    }
     
+    public void next() {
+        currentPlayerIdx = (currentPlayerIdx + 1) % players.size();
+        if (getCurrentPlayer().isBroke()) {
+            next();
+        }
+    } 
 }
